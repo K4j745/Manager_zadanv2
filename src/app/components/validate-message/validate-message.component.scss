@@ -1,0 +1,34 @@
+//@use "apps/www/src/scss/functions" as f;
+//@use "apps/www/src/scss/mixins" as m;
+//@use "apps/www/src/scss/variables" as *;
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/breakpoints";
+
+.vmc-error {
+  color: #f00;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 1rem; // domyślnie na małych ekranach
+  margin-bottom: 0;
+
+  @media (min-width: 576px) {
+    // sm
+    font-size: 0.7rem;
+  }
+
+  @media (min-width: 768px) {
+    // md
+    font-size: 0.7rem;
+  }
+
+  @media (min-width: 992px) {
+    // lg
+    font-size: 1rem;
+  }
+
+  @media (min-width: 1200px) {
+    // xl
+    font-size: 1rem;
+  }
+}

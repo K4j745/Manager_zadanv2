@@ -1,0 +1,34 @@
+<main>
+  <div class="main-ramka">
+    <div class="parent">
+      <div class="div1">
+        <div class="main-tytul">
+          <mat-card appearance="outlined" class="tytul">
+            <mat-card-header>
+              <mat-card-title> Witaj w Managerze zadań!</mat-card-title>
+              <mat-card-subtitle>
+                <small>
+                  Aplikacja służy do zarządzania zadaniami. Pozwala dodawać,
+                  edytować, usuwać i oznaczać zadania jako ukończone. Dane są
+                  zapisywane lokalnie, a interfejs oparty jest na Angular
+                  Material.
+                </small>
+              </mat-card-subtitle>
+            </mat-card-header>
+          </mat-card>
+        </div>
+      </div>
+      <div class="div3">
+        <button matButton="elevated" (click)="openModal()">
+          Dodaj zadanie
+        </button>
+      </div>
+      <div class="div4">
+        <mat-card appearance="outlined" class="lista">
+          <!-- <app-testy></app-testy> -->
+          <app-lista-zad></app-lista-zad>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</main>

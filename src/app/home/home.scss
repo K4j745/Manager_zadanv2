@@ -1,0 +1,86 @@
+.parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+
+  grid-auto-rows: min-content;
+
+  gap: 8px;
+
+  .div1 {
+    grid-column-start: 2;
+    grid-row-start: 2;
+    margin: 0;
+    padding: 0;
+  }
+
+  .div3 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    grid-column-start: 4;
+    grid-row-start: 2;
+    margin: 0;
+    .button {
+      display: block;
+      visibility: visible;
+      opacity: 1;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      min-width: 80px;
+      height: 40px;
+      position: relative;
+      z-index: 2;
+      background-color: yellow;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+    }
+  }
+
+  .div4 {
+    grid-column: span 3 / span 3;
+    grid-row: span 3 / span 3;
+    grid-column-start: 2;
+    grid-row-start: 3;
+    margin: 0;
+    padding: 0;
+    background-color: --mat-sys-on-surface;
+    border-radius: 15px;
+    .lista {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+}
+.main-ramka {
+  background-color: --mat-sys-surface;
+  color: --mat-sys-on-surface;
+}
+.main-tytul {
+  width: 700px;
+  .tytul {
+    padding-bottom: 15px;
+  }
+}
+small {
+  font-size: smaller;
+}

@@ -1,0 +1,8 @@
+footer {
+  border: none; // usuwa inne krawędzie
+  border-top: 1px solid lightgray;
+  background-color: --mat-sys-primary-fixed-dim; //--mat-sys-error; //--mat-sys-primary;
+  color: --mat-sys-on-tertiary;
+  padding-top: 20px;
+  margin-top: 20px;
+}

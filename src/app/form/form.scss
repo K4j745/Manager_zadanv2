@@ -1,0 +1,35 @@
+/* Po pierwsze – pozwól, żeby overlayy Materiala wychodziły poza modal */
+::ng-deep .modal {
+  overflow: visible !important;
+}
+
+/* Po drugie – upewnij się, że CDK‑owy kontener jest nad modala */
+.cdk-overlay-container {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000 !important; /* wyżej niż Bootstrapowy modal (~1050) */
+}
+mat-form-field {
+  width: 450px;
+}
+mat-card-title {
+  margin-bottom: 1em;
+}
+mat-card {
+  border-radius: 5px;
+}
+.form {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  &-przyciski {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5em;
+    gap: 10px;
+  }
+}
