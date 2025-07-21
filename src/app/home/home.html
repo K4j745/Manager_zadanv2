@@ -1,11 +1,12 @@
-<main>
+<main class="main-content">
   <div class="main-ramka">
     <div class="parent">
+      <!-- Tytuł -->
       <div class="div1">
         <div class="main-tytul">
           <mat-card appearance="outlined" class="tytul">
             <mat-card-header>
-              <mat-card-title> Witaj w Managerze zadań!</mat-card-title>
+              <mat-card-title>Witaj w Managerze zadań!</mat-card-title>
               <mat-card-subtitle>
                 <small>
                   Aplikacja służy do zarządzania zadaniami. Pozwala dodawać,
@@ -18,15 +19,27 @@
           </mat-card>
         </div>
       </div>
+
+      <!-- Przycisk dodawania -->
       <div class="div3">
-        <button matButton="elevated" (click)="openModal()">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="openModal()"
+          class="w-70 w-md-auto"
+        >
+          <!--w-100-->
+          <mat-icon>playlist_add</mat-icon>
           Dodaj zadanie
         </button>
       </div>
+
+      <!-- Lista zadań -->
       <div class="div4">
-        <mat-card appearance="outlined" class="lista">
-          <!-- <app-testy></app-testy> -->
-          <app-lista-zad></app-lista-zad>
+        <mat-card appearance="outlined" class="lista full-height">
+          <mat-card-content class="full-height">
+            <app-lista-zad class="flex-fill"></app-lista-zad>
+          </mat-card-content>
         </mat-card>
       </div>
     </div>

@@ -1,4 +1,8 @@
-/* Po pierwsze – pozwól, żeby overlayy Materiala wychodziły poza modal */
+/* Po pierwsze – pozwól, żeby overlayy Materiala wychodziły poza modal
+ */
+* {
+  font-family: "Helvetica Neue", sans-serif;
+}
 ::ng-deep .modal {
   overflow: visible !important;
 }

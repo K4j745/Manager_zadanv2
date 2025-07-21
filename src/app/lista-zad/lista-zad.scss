@@ -1,44 +1,40 @@
 @use "@angular/material" as mat;
 
 // Definicja motywu (dodaj do głównego pliku stylów jeśli jeszcze nie ma)
-
-// Zmienne CSS
-:root {
-  --table-bg: #fafafa;
-  --table-hover-bg: #e0f2f1;
-  --table-selected-bg: #b2dfdb;
-  --table-header-bg: #eceff1;
-  --table-border-color: #e0e0e0;
-  --table-text-color: #424242;
-  --table-header-text-color: #455a64;
-  --table-accent-color: #00796b;
-  --button-completed-bg: #4caf50;
-  --button-delete-bg: #f44336;
-  --button-edit-bg: #2196f3;
-  --alert-error-bg: #ffebee;
-  --alert-error-border: #f44336;
-  --alert-error-text: #c62828;
+* {
+  font-family: "Helvetica Neue", sans-serif;
 }
 
 // Główny kontener listy
 .list {
-  margin: 20px 0;
+  margin: 20px auto;
+  padding: 0 1rem;
+  max-width: 100%;
 
   // Tabela z zadaniami
   .demo-table {
+    border-collapse: collapse;
+    border-spacing: 0;
     width: 100%;
+    // width: 100%;
+    // border-collapse: collapse;
+    //table-layout: fixed;
     background-color: --mat-sys-primiary;
-    border-radius: 8px;
-    overflow: hidden;
+    // border-radius: 8px;
+    //overflow: hidden;
     color: --mat-sys-on-primiary;
     border-color: --mat-sys-outline;
+    #hasz {
+      text-align: left;
+    }
+
     // Wiersze danych
     .mat-mdc-row {
       transition: all 0.2s ease;
       border-bottom: 1px solid var(--table-border-color);
 
       &:hover {
-        background-color: var(--table-hover-bg) !important;
+        background-color: var(--mat-sys-secondary-container) !important;
         cursor: pointer;
       }
 
@@ -46,14 +42,17 @@
         background-color: rgba(0, 0, 0, 0.02);
 
         &:hover {
-          background-color: var(--table-hover-bg) !important;
+          background-color: var(--mat-sys-secondary-container) !important;
         }
       }
     }
 
     // Nagłówek tabeli
     .mat-mdc-header-row {
-      background-color: var(--table-header-bg);
+      background-color: var(
+        --mat-sys-primary-fixed-dim
+      ); //--mat-sys-secondary-container
+      color: var(--mat-sys-on-primary-fixed);
       font-weight: 600;
       border-bottom: 2px solid #90a4ae;
 
@@ -158,7 +157,18 @@
       }
     }
   }
-
+  .table-wrapper {
+    // overflow-x: scroll;
+    //display: block;
+    //width: 100%;
+    //width: min(900px, 100% - 3rem);
+    margin-inline: auto;
+    overflow-x: auto;
+  }
+  .table-container {
+    max-width: 100%;
+    overflow-x: scroll;
+  }
   // Alert dla błędów edycji
   /* Styl dla Twojego alertu */
   .list-alert-edit {
@@ -235,67 +245,6 @@
       justify-content: flex-start;
       gap: 10px;
     }
-
-    //     button {
-    //       display: block !important;
-    //       visibility: visible !important;
-    //       opacity: 1 !important;
-    //       padding: 10px 20px !important;
-    //       border: none !important;
-    //       border-radius: 6px !important;
-    //       font-size: 14px !important;
-    //       font-weight: 500 !important;
-    //       cursor: pointer !important;
-    //       transition: all 0.2s ease !important;
-    //       text-transform: uppercase !important;
-    //       letter-spacing: 0.5px !important;
-    //       min-width: 80px !important;
-    //       height: 40px !important;
-    //       position: relative !important;
-    //       z-index: 2 !important;
-
-    //       &:hover {
-    //         transform: translateY(-2px);
-    //         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    //       }
-
-    //       &:active {
-    //         transform: translateY(0);
-    //       }
-
-    //       &:disabled {
-    //         opacity: 0.6;
-    //         cursor: not-allowed;
-    //         transform: none;
-    //       }
-    //     }
-
-    //     .list-buttons-finished {
-    //       background-color: var(--button-completed-bg) !important;
-    //       color: white !important;
-
-    //       &:hover {
-    //         background-color: #45a049 !important;
-    //       }
-    //     }
-
-    //     .list-buttons-delete {
-    //       background-color: var(--button-delete-bg) !important;
-    //       color: white !important;
-
-    //       &:hover {
-    //         background-color: #da190b !important;
-    //       }
-    //     }
-
-    //     .list-buttons-edit {
-    //       background-color: var(--button-edit-bg) !important;
-    //       color: white !important;
-
-    //       &:hover {
-    //         background-color: #1976d2 !important;
-    //       }
-    //     }
   }
 
   // Pusty stan
@@ -329,12 +278,12 @@
       .badge-priority,
       .badge-status {
         font-size: 10px;
-        padding: 2px 8px;
+        padding: 2px 15px;
       }
     }
 
     .list-buttons {
-      flex-direction: column;
+      flex-direction: row;
 
       button {
         width: 100%;
@@ -405,33 +354,20 @@ html.dark {
 div.list div.list-buttons {
   display: flex !important;
   gap: 12px !important;
-  margin-top: 20px !important;
+  margin-top: 15px !important;
+}
 
-  //   button.list-buttons-finished,
-  //   button.list-buttons-delete,
-  //   button.list-buttons-edit {
-  //     display: inline-block !important;
-  //     padding: 10px 20px !important;
-  //     border: none !important;
-  //     border-radius: 6px !important;
-  //     font-size: 14px !important;
-  //     cursor: pointer !important;
-  //     min-width: 80px !important;
-  //     height: 40px !important;
-  //   }
-
-  //   button.list-buttons-finished {
-  //     background-color: #4caf50 !important;
-  //     color: white !important;
-  //   }
-
-  //   button.list-buttons-delete {
-  //     background-color: #f44336 !important;
-  //     color: white !important;
-  //   }
-
-  //   button.list-buttons-edit {
-  //     background-color: #2196f3 !important;
-  //     color: white !important;
-  //   }
+.list-filters {
+  margin-bottom: 1em;
+  &-container {
+    display: grid;
+    gap: 16px;
+    padding: 16px;
+  }
+  mat-form-field {
+    flex: 1;
+  }
+  mat-action-row {
+    gap: 8px;
+  }
 }

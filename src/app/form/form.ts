@@ -70,6 +70,8 @@ export class Form implements OnInit {
     form: FormGroup<FormModel>;
   }>();
 
+  @Input() isEditMode: boolean = false; //do sprawdzenia czy formularz jest edycja
+
   //nazwaFormControl = new FormControl('', [Validators.required, Validators]);
   public form!: FormGroup<FormModel>;
 

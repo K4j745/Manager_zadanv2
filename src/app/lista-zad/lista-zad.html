@@ -1,26 +1,11 @@
-<div class="list">
+<div class="list" mat-elevation-z8>
   <ng-container>
-    <div
-      *ngIf="editErrorMessage"
-      role="alert"
-      class="list-alert-edit fade-out-alert-edit"
-    >
-      <!-- <i class="fas fa-exclamation-triangle me-2"></i> -->
-      <div
-        class="list-alert-edit-container"
-        [ngClass]="{ 'fade-out-alert': !showAlert }"
-      >
-        <div class="list-alert-edit-container-text">
-          {{ editErrorMessage }}
-        </div>
-      </div>
-    </div>
     <div class="list-buttons">
       <div class="list-buttons-buttons">
         <button matButton="filled" (click)="markSelectedAsCompleted()">
           Ukończ
         </button>
-        <button matButton="outlined" (click)="editSelected()">Edytuj</button>
+        <button matButton="elevated" (click)="editSelected()">Edytuj</button>
       </div>
 
       <div class="list-buttons-trash">
@@ -34,91 +19,158 @@
       </div>
     </div>
   </ng-container>
-  <table
-    mat-table
-    [dataSource]="currentTasks"
-    class="mat-elevation-z8 demo-table"
-  >
-    <!-- Checkbox -->
-    <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef>
-        <input
-          type="checkbox"
-          [checked]="allSelected"
-          (change)="toggleSelectAll($event)"
-        />
-      </th>
-      <td mat-cell *matCellDef="let task">
-        <input
-          type="checkbox"
-          [(ngModel)]="selectedTasksMap[task.id]"
-          name="checkbox-{{ task.id }}"
-        />
-      </td>
-    </ng-container>
 
-    <!-- Numer -->
-    <ng-container matColumnDef="index">
-      <th mat-header-cell *matHeaderCellDef>#</th>
-      <td mat-cell *matCellDef="let task; let i = index">{{ i + 1 }}</td>
-    </ng-container>
+  <!-- Panel filtrowania -->
+  <div class="list-filters">
+    <mat-accordion>
+      <mat-expansion-panel #filtersPanel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Filtry </mat-panel-title>
+        </mat-expansion-panel-header>
 
-    <!-- Zadanie -->
-    <ng-container matColumnDef="nazwaZadania">
-      <th mat-header-cell *matHeaderCellDef>Zadanie</th>
-      <td mat-cell *matCellDef="let task">{{ task.nazwaZadania }}</td>
-    </ng-container>
+        <div class="list-filters-container">
+          <!-- Kategorie -->
+          <mat-form-field>
+            <mat-label>Kategoria</mat-label>
+            <mat-select multiple [(ngModel)]="filters.kategoria">
+              <mat-option
+                *ngFor="let category of availableCategories"
+                [value]="category"
+              >
+                {{ category }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-    <!-- Kategoria -->
-    <ng-container matColumnDef="kategoria">
-      <th mat-header-cell *matHeaderCellDef>Kategoria</th>
-      <td mat-cell *matCellDef="let task">{{ task.kategoria }}</td>
-    </ng-container>
+          <!-- Priorytet -->
+          <mat-form-field>
+            <mat-label>Priorytet</mat-label>
+            <mat-select multiple [(ngModel)]="filters.priorytet">
+              <mat-option
+                *ngFor="let priority of availablePriorities"
+                [value]="priority"
+              >
+                {{ priority }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-    <!-- Data -->
-    <ng-container matColumnDef="data">
-      <th mat-header-cell *matHeaderCellDef>Data</th>
-      <td mat-cell *matCellDef="let task">
-        {{ task.data | date : "yyyy-MM-dd" }}
-      </td>
-    </ng-container>
+          <!-- Status -->
+          <mat-form-field>
+            <mat-label>Status</mat-label>
+            <mat-select [(ngModel)]="filters.status">
+              <mat-option
+                *ngFor="let status of availableStatuses"
+                [value]="status.value"
+              >
+                {{ status.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-    <!-- Priorytet -->
-    <ng-container matColumnDef="priorytet">
-      <th mat-header-cell *matHeaderCellDef>Priorytet</th>
-      <td mat-cell *matCellDef="let task">
-        <span
-          class="badge-priority"
-          [ngClass]="
-            task.priorytet === 'Niski'
-              ? 'bg-low'
-              : task.priorytet === 'Wysoki'
-              ? 'bg-high'
-              : 'bg-medium'
-          "
-        >
-          {{ task.priorytet }}
-        </span>
-      </td>
-    </ng-container>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="resetFilters()">
+            Resetuj
+          </button>
+          <button mat-raised-button color="primary" (click)="applyFilters()">
+            Filtruj
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 
-    <!-- Status -->
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef>Status</th>
-      <td mat-cell *matCellDef="let task">
-        <span
-          class="badge-status"
-          [ngClass]="task.status ? 'bg-success' : 'bg-warning'"
-        >
-          {{ task.status ? "Ukończone" : "Nieukończone" }}
-        </span>
-      </td>
-    </ng-container>
+  <div class="table-wrapper">
+    <div class="table-container">
+      <table
+        *ngIf="currentTasks?.length; else empty"
+        mat-table
+        [dataSource]="currentTasks"
+        class="mat-elevation-z8 demo-table"
+      >
+        <!-- Checkbox -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <input
+              type="checkbox"
+              [checked]="allSelected"
+              (change)="toggleSelectAll($event)"
+            />
+          </th>
+          <td mat-cell *matCellDef="let task">
+            <input
+              type="checkbox"
+              [(ngModel)]="selectedTasksMap[task.id]"
+              name="checkbox-{{ task.id }}"
+            />
+          </td>
+        </ng-container>
 
-    <!-- Wiersze -->
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+        <!-- Numer -->
+        <ng-container matColumnDef="index">
+          <th id="hasz" mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let task; let i = index">{{ i + 1 }}</td>
+        </ng-container>
+
+        <!-- Zadanie -->
+        <ng-container matColumnDef="nazwaZadania">
+          <th mat-header-cell *matHeaderCellDef>Zadanie</th>
+          <td mat-cell *matCellDef="let task">{{ task.nazwaZadania }}</td>
+        </ng-container>
+
+        <!-- Kategoria -->
+        <ng-container matColumnDef="kategoria">
+          <th mat-header-cell *matHeaderCellDef>Kategoria</th>
+          <td mat-cell *matCellDef="let task">{{ task.kategoria }}</td>
+        </ng-container>
+
+        <!-- Data -->
+        <ng-container matColumnDef="data">
+          <th mat-header-cell *matHeaderCellDef>Data</th>
+          <td mat-cell *matCellDef="let task">
+            {{ task.data | date : "yyyy-MM-dd" }}
+          </td>
+        </ng-container>
+
+        <!-- Priorytet -->
+        <ng-container matColumnDef="priorytet">
+          <th mat-header-cell *matHeaderCellDef>Priorytet</th>
+          <td mat-cell *matCellDef="let task">
+            <span
+              class="badge-priority"
+              [ngClass]="
+                task.priorytet === 'Niski'
+                  ? 'bg-low'
+                  : task.priorytet === 'Wysoki'
+                  ? 'bg-high'
+                  : 'bg-medium'
+              "
+            >
+              {{ task.priorytet }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Status -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let task">
+            <span
+              class="badge-status"
+              [ngClass]="task.status ? 'bg-success' : 'bg-warning'"
+            >
+              {{ task.status ? "Ukończone" : "Nieukończone" }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Wiersze -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
 
   <ng-template #empty> <p class="text-muted">Brak zadań.</p> </ng-template>
 </div>

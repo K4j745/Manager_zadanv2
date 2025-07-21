@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { TaskService } from '../services/manager.service';
 import { FormSaveDto } from '../models/form-save-dto';
 import { CommonModule } from '@angular/common';
@@ -12,6 +12,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import {
+  MatExpansionModule,
+  MatExpansionPanel,
+} from '@angular/material/expansion';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-lista-zad',
@@ -28,22 +36,41 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     MatIconModule,
     //MatSnackBar,
     MatSnackBarModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
 })
 export class ListaZadComponent implements OnInit, OnDestroy {
   tasks$!: Observable<FormSaveDto[]>;
+  @ViewChild('filtersPanel') filtersPanel!: MatExpansionPanel;
   selectedTasksMap: { [id: string]: boolean } = {};
   allSelected = false;
+  filters = {
+    kategoria: [] as string[],
+    priorytet: [] as string[],
+    status: null as boolean | null,
+  };
+  availableCategories: string[] = ['Praca', 'Dom', 'Zakupy', 'Studia'];
+  availablePriorities: string[] = ['Niski', 'Średni', 'Wysoki'];
+  availableStatuses = [
+    { value: null, viewValue: 'Wszystkie' },
+    { value: true, viewValue: 'Ukończone' },
+    { value: false, viewValue: 'Nieukończone' },
+  ];
 
   // Subject do zarządzania unsubscribe
   private destroy$ = new Subject<void>();
 
   //Deklaracja zmiennej komunikatu do edycji
-  public editErrorMessage: string | null = null;
+  //public editErrorMessage: string | null = null; //nie potrzebne bo robimysnackbarem
   public showAlert = false;
 
   public currentTasks: FormSaveDto[] = [];
-
+  private allTasks: FormSaveDto[] = [];
+  private filteredTasks: FormSaveDto[] = [];
   displayedColumns: string[] = [
     'select',
     'index',
@@ -65,6 +92,8 @@ export class ListaZadComponent implements OnInit, OnDestroy {
 
     // Pojedyncza subskrypcja z wynikami
     this.tasks$.pipe(takeUntil(this.destroy$)).subscribe((tasks) => {
+      this.allTasks = tasks || [];
+      this.filteredTasks = [...this.allTasks];
       this.currentTasks = tasks || [];
       this.updateAllSelectedState();
     });
@@ -93,8 +122,18 @@ export class ListaZadComponent implements OnInit, OnDestroy {
     );
 
     if (selectedTaskIds.length === 0) {
+      this.snackBar.open(
+        'Żeby ukończyć zadanie/a, musisz je najpierw zaznaczyć.',
+        'OK',
+        {
+          duration: 3500,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+        }
+      );
+      return;
       // alert('Musisz zaznaczyć zadanie/a, żeby zmienić status.'); //fajny alert
-      return; // Brak zaznaczonych elementów
+      //return; // Brak zaznaczonych elementów
     }
 
     // Używaj cached tasks i wykonaj operacje asynchronicznie
@@ -135,7 +174,7 @@ export class ListaZadComponent implements OnInit, OnDestroy {
       // }, 3500);
       // return;
     }
-    this.editErrorMessage = null; // czyszczę zmienną
+    //this.editErrorMessage = null; // czyszczę zmienną nie potrzebne - snackbar
 
     const taskToEdit = this.currentTasks.find(
       (task) => task.id === selectedTaskIds[0]
@@ -144,6 +183,7 @@ export class ListaZadComponent implements OnInit, OnDestroy {
 
     const modalRef = this.modalService.open(Form);
     modalRef.componentInstance.formDataToEdit = taskToEdit; //To było potrzebne
+    modalRef.componentInstance.isEditMode = true;
     //modalRef.componentInstance.form.patchValue(taskToEdit);
 
     modalRef.result
@@ -181,8 +221,18 @@ export class ListaZadComponent implements OnInit, OnDestroy {
     );
 
     if (selectedTaskIds.length === 0) {
+      this.snackBar.open(
+        'Żeby usunąć zadanie/a, musisz je najpierw zaznaczyć.',
+        'OK',
+        {
+          duration: 3500,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+        }
+      );
+      return;
       // alert('Musisz zaznaczyć zadanie/a, żeby je usunąć.'); //alternatywa alertu
-      return; // Gdy nic nie zaznaczone
+      // return; // Gdy nic nie zaznaczone
     }
 
     const tasksToRemove = this.currentTasks.filter(
@@ -234,5 +284,42 @@ export class ListaZadComponent implements OnInit, OnDestroy {
   // Metoda do zliczania zaznaczonych zadań
   getSelectedTasksCount(): number {
     return Object.values(this.selectedTasksMap).filter(Boolean).length;
+  }
+  applyFilters(): void {
+    this.filteredTasks = this.allTasks.filter((task) => {
+      //filtrowanie kategoriia
+      if (
+        this.filters.kategoria.length > 0 &&
+        !this.filters.kategoria.includes(task.kategoria)
+      ) {
+        return false;
+      }
+
+      //filtrowanie priorytet
+      if (
+        this.filters.priorytet.length > 0 &&
+        !this.filters.priorytet.includes(task.priorytet)
+      ) {
+        return false;
+      }
+      //status
+      if (this.filters.status !== null && task.status !== this.filters.status) {
+        return false;
+      }
+      return true;
+    });
+    this.currentTasks = this.filteredTasks;
+    this.updateAllSelectedState();
+    this.filtersPanel.close();
+  }
+  resetFilters(): void {
+    this.filters = {
+      kategoria: [],
+      priorytet: [],
+      status: null,
+    };
+    this.filteredTasks = [...this.allTasks];
+    this.currentTasks = this.filteredTasks;
+    this.updateAllSelectedState();
   }
 }

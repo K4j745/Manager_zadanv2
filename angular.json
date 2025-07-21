@@ -29,8 +29,8 @@
               },
               {
                 "glob": "**/*",
-                "input": "src/assets",
-                "output": "assets"
+                "input": "src/assets/fonts",
+                "output": "fonts"
               }
             ],
             "styles": [
@@ -96,8 +96,8 @@
               },
               {
                 "glob": "**/*",
-                "input": "src/assets",
-                "output": "assets"
+                "input": "src/assets/fonts",
+                "output": "fonts"
               }
             ],
             "styles": [

@@ -7,9 +7,10 @@
 
 .vmc-error {
   color: #f00;
-  font-weight: 500;
+  font-weight: 300;
   font-style: italic;
-  font-size: 1rem; // domyślnie na małych ekranach
+  font-size: 0.7rem; // domyślnie na małych ekranach
+  margin-top: 0;
   margin-bottom: 0;
 
   @media (min-width: 576px) {
@@ -24,11 +25,11 @@
 
   @media (min-width: 992px) {
     // lg
-    font-size: 1rem;
+    font-size: 0.7rem;
   }
 
   @media (min-width: 1200px) {
     // xl
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 }

@@ -1,6 +1,40 @@
+// * {
+//   font-family: "Helvetica Neue", sans-serif;
+// }
+@use "@angular/material" as mat;
 header {
-  background-color: --mat-sys-primary-fixed-dim; //--mat-sys-error; //--mat-sys-primary;
-  color: --mat-sys-on-tertiary;
-  border-color: --mat-sys-outline;
-  margin-bottom: 20px;
+  margin: 0;
+}
+.head {
+  mat-toolbar {
+    background-color: var(--mat-sys-primary-container); // np. tło nagłówka
+    color: var(--mat-sys-on-primary-container); // kolor tekstu
+    border-color: var(--mat-sys-outline); // kolor obramowania
+    margin-bottom: 0;
+  }
+
+  // button {
+  //   font-family: initial !important;
+  //   background-color: var(--button-delete-bg) !important;
+  //   color: white !important;
+  // }
+  // Tablet
+  @media (max-width: 1024px) {
+    //padding: 12px 15px;
+    margin-bottom: 15px;
+  }
+
+  // Mobile
+  @media (max-width: 768px) {
+    //padding: 10px 15px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  // Small mobile
+  @media (max-width: 480px) {
+    //padding: 8px 12px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
 }

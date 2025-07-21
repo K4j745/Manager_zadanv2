@@ -1,6 +1,10 @@
 <mat-card appearance="outlined">
   <mat-card-header>
-    <mat-card-title>Dodawanie zadań</mat-card-title>
+    <mat-card-title>
+      <h2 class="form-title">
+        {{ isEditMode ? "Edytowanie zadania" : "Dodawanie zadania" }}
+      </h2>
+    </mat-card-title>
     <!-- <mat-card-subtitle>Non-sporting group</mat-card-subtitle> -->
   </mat-card-header>
   <form [formGroup]="form" class="form">
@@ -143,7 +147,8 @@
     <div class="form-przyciski">
       <!--class="col-12 form-przyciski d-flex justify-content-end gap-2">-->
       <button
-        matButton="tonal"
+        matButton
+        color="warn"
         type="button"
         class="button-dismiss"
         (mousedown)="$event.preventDefault(); onCancel()"
