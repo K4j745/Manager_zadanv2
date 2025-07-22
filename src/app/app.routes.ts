@@ -7,7 +7,7 @@ export const routes: Routes = [
     path: '',
     pathMatch: 'full',
     loadComponent: () => {
-      return import('./home/home').then((m) => m.Home);
+      return import('./house/house').then((m) => m.House);
     },
   },
   { path: 'form', component: Form },
@@ -20,13 +20,20 @@ export const routes: Routes = [
   },
   {
     path: 'manager-zadan',
-    //pathMatch: 'info',
+    //pathMatch: 'full',
     loadComponent: () => {
-      return import('./manager-zadan/manager-zadan').then(
-        (m) => m.ManagerZadan
-      );
+      return import('./home/home').then((m) => m.Home);
     },
   },
+  // {
+  //   path: 'manager-zadan',
+  //   //pathMatch: 'info',
+  //   loadComponent: () => {
+  //     return import('./manager-zadan/manager-zadan').then(
+  //       (m) => m.ManagerZadan
+  //     );
+  //   },
+  // },
   //   { path: '', redirectTo: '/form', pathMatch: 'full' },
 ];
 @NgModule({
