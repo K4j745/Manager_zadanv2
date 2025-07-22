@@ -10,15 +10,27 @@ export class ExcelExportService {
    * @param sheetName Nazwa arkusza w skoroszycie
    * @param fileName Nazwa pliku output (bez rozszerzenia)
    */
+  private _getTimestamp(): string {
+    const now = new Date();
+    const pad = (n: number) => n.toString().padStart(2, '0');
+
+    const year = now.getFullYear();
+    const month = pad(now.getMonth() + 1); // miesiące od 0
+    const day = pad(now.getDate());
+    const hour = pad(now.getHours());
+    const minute = pad(now.getMinutes());
+    const second = pad(now.getSeconds());
+
+    return `${year}-${month}-${day}_${hour}-${minute}-${second}`;
+  }
   exportAsExcelFile(
     data: any[],
     sheetName: string = 'Arkusz1',
     fileName: string = 'dane'
   ): void {
-    // 1) Zamień tablicę obiektów na arkusz
+    // Tablica na arkusz
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
 
-    // 2) Utwórz skoroszyt i dodaj do niego arkusz
     const workbook: XLSX.WorkBook = {
       Sheets: { [sheetName]: worksheet },
       SheetNames: [sheetName],
@@ -35,11 +47,7 @@ export class ExcelExportService {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8',
     });
 
-    const timestamp = new Date()
-      .toISOString()
-      .slice(0, 19)
-      .replace(/[:T]/g, '-'); // YYYY-MM-DD-HH-MM-SS
-
+    const timestamp = this._getTimestamp();
     saveAs(blob, `${fileName}_${timestamp}.xlsx`);
   }
 }
