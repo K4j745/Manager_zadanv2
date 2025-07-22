@@ -131,6 +131,7 @@
               type="checkbox"
               [(ngModel)]="selectedTasksMap[task.id]"
               name="checkbox-{{ task.id }}"
+              (click)="$event.stopPropagation()"
             />
           </td>
         </ng-container>
@@ -195,7 +196,12 @@
 
         <!-- Wiersze -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="toggleTaskSelection(row.id)"
+          [class.selected]="isTaskSelected(row.id)"
+        ></tr>
       </table>
     </div>
     <div class="paginator-wrapper">

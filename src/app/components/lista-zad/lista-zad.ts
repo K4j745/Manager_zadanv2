@@ -329,7 +329,7 @@ export class ListaZadComponent implements OnInit, OnDestroy {
       if (this.filters.dataOd && taskDate < this.filters.dataOd) {
         return false;
       }
-      if (this.filters.dataDo && taskDate < this.filters.dataDo) {
+      if (this.filters.dataDo && taskDate > this.filters.dataDo) {
         return false;
       }
 
