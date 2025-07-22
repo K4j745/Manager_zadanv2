@@ -5,25 +5,28 @@
         matIconButton
         class="example-icon"
         aria-label="Example icon-button with menu icon"
+        routerLink="/"
       >
-        <mat-icon>menu</mat-icon>
+        <mat-icon>home</mat-icon>
       </button>
-      <span>Manager zadań</span>
+      <span class="head-title" routerLink="/">Manager zadań</span>
       <span class="example-spacer"></span>
-      <!-- <button
-    matIconButton
-    class="example-icon favorite-icon"
-    aria-label="Example icon-button with heart icon"
-  >
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button
-    matIconButton
-    class="example-icon"
-    aria-label="Example icon-button with share icon"
-  >
-    <mat-icon>share</mat-icon> 
-  </button>-->
+      <div class="head-right">
+        <button matIconButton class="calendar-icon" routerLink="/manager-zadan">
+          <!-- aria-label="Example icon-button with share icon"
+      > -->
+          <mat-icon>calendar_today</mat-icon>
+        </button>
+        <button
+          matIconButton
+          class="example-icon favorite-icon"
+          aria-label="Example icon-button with heart icon"
+          routerLink="/info"
+        >
+          <mat-icon>info</mat-icon>
+        </button>
+      </div>
     </mat-toolbar>
+    <!-- <app-nav-bar></app-nav-bar> -->
   </div>
 </header>

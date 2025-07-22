@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Form } from '../form/form';
-import { ListaZadComponent } from '../lista-zad/lista-zad';
+import { ListaZadComponent } from '../components/lista-zad/lista-zad';
 import { Testy } from '../testy/testy';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -12,7 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-home',
   imports: [
-    Form /*, TaskList*/,
+    // Form /*, TaskList*/,
     ListaZadComponent /*Testy*/,
     MatButtonModule,
     MatDividerModule,

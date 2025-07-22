@@ -10,7 +10,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Home, Footer],
+  imports: [RouterOutlet, Header, Footer],
   template: `
     <app-header />
     <router-outlet></router-outlet>

@@ -11,6 +11,17 @@ header {
     color: var(--mat-sys-on-primary-container); // kolor tekstu
     border-color: var(--mat-sys-outline); // kolor obramowania
     margin-bottom: 0;
+    gap: 8px;
+    .example-icon favorite-icon {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+    }
+    .head-title {
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 
   // button {

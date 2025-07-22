@@ -21,7 +21,7 @@ import { FormSaveDto } from '../models/form-save-dto';
 import { ValidateMessageComponent } from '../components/validate-message/validate-message.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Kategoria, Priorytet } from '../models/form-enum';
-import { PrimaryExpression } from 'typescript';
+//import { PrimaryExpression } from 'typescript';
 import { TaskService } from '../services/manager.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -49,9 +49,9 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatNativeDateModule,
     MatButtonModule,
     ValidateMessageComponent,
-    MatCardActions,
+    //MatCardActions,
     //MatCardContent,
-    Datepicker,
+    //Datepicker,
     MatCardModule,
     MatDatepickerModule,
     FormsModule,

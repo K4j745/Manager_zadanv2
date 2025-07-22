@@ -11,6 +11,22 @@ export const routes: Routes = [
     },
   },
   { path: 'form', component: Form },
+  {
+    path: 'info',
+    //pathMatch: 'info',
+    loadComponent: () => {
+      return import('./info-page/info-page').then((m) => m.InfoPage);
+    },
+  },
+  {
+    path: 'manager-zadan',
+    //pathMatch: 'info',
+    loadComponent: () => {
+      return import('./manager-zadan/manager-zadan').then(
+        (m) => m.ManagerZadan
+      );
+    },
+  },
   //   { path: '', redirectTo: '/form', pathMatch: 'full' },
 ];
 @NgModule({
