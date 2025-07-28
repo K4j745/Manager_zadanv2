@@ -1,0 +1,224 @@
+<div class="list" mat-elevation-z8>
+  <ng-container>
+    <div class="list-buttons">
+      <div class="list-buttons-buttons">
+        <button matButton="filled" (click)="markSelectedAsCompleted()">
+          Ukończ
+        </button>
+        <button matButton="elevated" (click)="editSelected()">Edytuj</button>
+      </div>
+
+      <div class="list-buttons-trash">
+        <button matIconButton (click)="removeSelected()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Panel filtrowania -->
+  <div class="list-filters">
+    <mat-accordion>
+      <mat-expansion-panel #filtersPanel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Filtry </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="list-filters-container">
+          <!-- Kategorie -->
+          <!-- Filtr kategorii -->
+          <mat-form-field>
+            <mat-label>Kategoria</mat-label>
+            <mat-select multiple [(ngModel)]="filters.kategoria">
+              <mat-option
+                *ngFor="let category of availableCategories"
+                [value]="category"
+              >
+                {{ category }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Filtr priorytetu -->
+          <mat-form-field>
+            <mat-label>Priorytet</mat-label>
+            <mat-select multiple [(ngModel)]="filters.priorytet">
+              <mat-option
+                *ngFor="let priority of availablePriorities"
+                [value]="priority"
+              >
+                {{ priority }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Filtr statusu -->
+          <mat-form-field>
+            <mat-label>Status</mat-label>
+            <mat-select [(ngModel)]="filters.status">
+              <mat-option
+                *ngFor="let status of availableStatuses"
+                [value]="status.value"
+              >
+                {{ status.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Filtr daty -->
+          <div class="list-filters-container-date">
+            <mat-form-field>
+              <mat-label>Data od</mat-label>
+              <input
+                matInput
+                [matDatepicker]="startPicker"
+                [(ngModel)]="filters.dataOd"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="startPicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #startPicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Data do</mat-label>
+              <input
+                matInput
+                [matDatepicker]="endPicker"
+                [(ngModel)]="filters.dataDo"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="endPicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #endPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-action-row>
+          <button mat-button color="warn" (click)="resetFilters()">
+            Resetuj
+          </button>
+          <button mat-raised-button color="primary" (click)="applyFilters()">
+            Filtruj
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <div class="table-wrapper">
+    <div class="table-container">
+      <table
+        *ngIf="currentTasks?.length; else empty"
+        mat-table
+        [dataSource]="pagedTasks"
+        class="mat-elevation-z8 demo-table"
+      >
+        <!-- Checkbox -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <input
+              type="checkbox"
+              [checked]="allSelected"
+              (change)="toggleSelectAll($event)"
+            />
+          </th>
+          <td mat-cell *matCellDef="let task">
+            <input
+              type="checkbox"
+              [(ngModel)]="selectedTasksMap[task.id]"
+              name="checkbox-{{ task.id }}"
+              (click)="$event.stopPropagation()"
+            />
+          </td>
+        </ng-container>
+
+        <!-- Numer -->
+        <ng-container matColumnDef="index">
+          <th id="hasz" mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let task; let i = index">{{ i + 1 }}</td>
+        </ng-container>
+
+        <!-- Zadanie -->
+        <ng-container matColumnDef="nazwaZadania">
+          <th mat-header-cell *matHeaderCellDef>Zadanie</th>
+          <td mat-cell *matCellDef="let task">{{ task.nazwaZadania }}</td>
+        </ng-container>
+
+        <!-- Kategoria -->
+        <ng-container matColumnDef="kategoria">
+          <th mat-header-cell *matHeaderCellDef>Kategoria</th>
+          <td mat-cell *matCellDef="let task">{{ task.kategoria }}</td>
+        </ng-container>
+
+        <!-- Data -->
+        <ng-container matColumnDef="data">
+          <th mat-header-cell *matHeaderCellDef>Data</th>
+          <td mat-cell *matCellDef="let task">
+            {{ task.data | date : "yyyy-MM-dd" }}
+          </td>
+        </ng-container>
+
+        <!-- Priorytet -->
+        <ng-container matColumnDef="priorytet">
+          <th mat-header-cell *matHeaderCellDef>Priorytet</th>
+          <td mat-cell *matCellDef="let task">
+            <span
+              class="badge-priority"
+              [ngClass]="
+                task.priorytet === 'Niski'
+                  ? 'bg-low'
+                  : task.priorytet === 'Wysoki'
+                  ? 'bg-high'
+                  : 'bg-medium'
+              "
+            >
+              {{ task.priorytet }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Status -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let task">
+            <span
+              class="badge-status"
+              [ngClass]="task.status ? 'bg-success' : 'bg-warning'"
+            >
+              {{ task.status ? "Ukończone" : "Nieukończone" }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Wiersze -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="toggleTaskSelection(row.id)"
+          [class.selected]="isTaskSelected(row.id)"
+        ></tr>
+      </table>
+    </div>
+    <div class="paginator-wrapper">
+      <mat-paginator
+        [length]="currentTasks.length"
+        [pageSize]="5"
+        (page)="onPageChange($event)"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+
+  <ng-template #empty> <p class="text-muted">Brak zadań.</p> </ng-template>
+  <div class="export-button">
+    <button matIconButton (click)="exportToExcel()">
+      <mat-icon>download</mat-icon>
+    </button>
+  </div>
+</div>

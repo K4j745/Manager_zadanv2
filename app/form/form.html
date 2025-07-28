@@ -1,0 +1,169 @@
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>
+      <h2 class="form-title">
+        {{ isEditMode ? "Edytowanie zadania" : "Dodawanie zadania" }}
+      </h2>
+    </mat-card-title>
+    <!-- <mat-card-subtitle>Non-sporting group</mat-card-subtitle> -->
+  </mat-card-header>
+  <form [formGroup]="form" class="form">
+    <!-- <div class="row g-3"> -->
+    <!-- Nazwa zadania -->
+    <!-- <div> -->
+    <!--class="col-md-12 form-nazwaZadania">-->
+    <!-- <label for="nazwaZadania" class="form-label">Wpisz nazwę zadania</label> -->
+    <!-- <input
+        type="text"
+        class="form-control"
+        id="nazwaZadania"
+        placeholder="Wpisz nazwę zadania..."
+        required
+      />
+      <www-validate-message
+        [control]="f.nazwaZadania"
+        [visible]="showValidationMessages"
+        fieldName="nazwaZadania"
+        class="invalid-feedback"
+      />
+    </div> -->
+    <mat-form-field>
+      <mat-label>Nazwa zadania</mat-label>
+      <input
+        matInput
+        type="text"
+        id="nazwaZadania"
+        placeholder="Wpisz nazwę zadania..."
+        formControlName="nazwaZadania"
+        required
+      />
+      <www-validate-message
+        [control]="f.nazwaZadania"
+        [visible]="showValidationMessages"
+        fieldName="nazwaZadania"
+      />
+    </mat-form-field>
+    <!-- Kategoria -->
+    <!-- <div> -->
+    <!--class="col-md-6 form-kategoria">-->
+    <!-- <label for="kategoria" class="form-label">Wybierz kategorię</label> -->
+    <!-- <select class="form-select" id="kategoria" formControlName="kategoria">
+        <option value="Praca">Praca</option>
+        <option value="Dom">Dom</option>
+        <option value="Zakupy">Zakupy</option>
+        <option value="Studia">Studia</option>
+      </select>
+      <www-validate-message
+        [control]="f.kategoria"
+        [visible]="showValidationMessages"
+        class="invalid-feedback"
+      />
+    </div> -->
+    <mat-form-field>
+      <mat-label>Kategoria</mat-label>
+      <mat-select id="kategoria" formControlName="kategoria" required>
+        <mat-option value="Praca">Praca</mat-option>
+        <mat-option value="Dom">Dom</mat-option>
+        <mat-option value="Zakupy">Zakupy</mat-option>
+        <mat-option value="Studia">Studia</mat-option>
+      </mat-select>
+
+      <www-validate-message
+        [control]="f.kategoria"
+        [visible]="showValidationMessages"
+        fieldName="kategoria"
+      />
+    </mat-form-field>
+    <!-- Data -->
+    <mat-form-field>
+      <mat-label>Wybierz datę</mat-label>
+      <input
+        matInput
+        placeholder="MM/DD/YYYY"
+        [matDatepicker]="picker"
+        id="data"
+        formControlName="data"
+        [min]="minDate"
+        required
+      />
+      <mat-datepicker-toggle matIconSuffix [for]="picker">
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <www-validate-message
+        [control]="f.data"
+        [visible]="showValidationMessages"
+        fieldName="data"
+      />
+    </mat-form-field>
+
+    <!-- 
+    <div>
+      <label for="data" class="form-label">Wybierz datę</label>
+      <input
+        type="date"
+        class="form-control"
+        id="data"
+        formControlName="data"
+        [min]="minDate"
+      />
+      <www-validate-message
+        [control]="f.data"
+        [visible]="showValidationMessages"
+        class="invalid-feedback"
+      />
+    </div> -->
+
+    <!-- Priorytet -->
+    <!-- <div> -->
+    <!--class="col-md-12 form-priorytet">-->
+    <!-- <label for="priorytet" class="form-label">Określ priorytet</label>
+      <select class="form-select" id="priorytet" formControlName="priorytet">
+        <option value="Niski">Niski</option>
+        <option value="Średni">Średni</option>
+        <option value="Wysoki">Wysoki</option>
+      </select>
+      <www-validate-message
+        [control]="f.priorytet"
+        [visible]="showValidationMessages"
+        class="invalid-feedback"
+      />
+    </div> -->
+    <mat-form-field>
+      <mat-label>Priorytet</mat-label>
+      <mat-select id="priorytet" formControlName="priorytet" required>
+        <mat-option value="Niski">Niski</mat-option>
+        <mat-option value="Średni">Średni</mat-option>
+        <mat-option value="Wysoki">Wysoki</mat-option>
+      </mat-select>
+
+      <www-validate-message
+        [control]="f.priorytet"
+        [visible]="showValidationMessages"
+        fieldName="priorytet"
+      />
+    </mat-form-field>
+
+    <!-- Przyciski -->
+    <div class="form-przyciski">
+      <!--class="col-12 form-przyciski d-flex justify-content-end gap-2">-->
+      <button
+        matButton
+        color="warn"
+        type="button"
+        class="button-dismiss"
+        (mousedown)="$event.preventDefault(); onCancel()"
+      >
+        Anuluj
+      </button>
+      <button
+        matButton="filled"
+        type="button"
+        class="button-confirm"
+        (click)="onSendApplication()"
+      >
+        Zapisz
+      </button>
+    </div>
+    <!-- </div> -->
+  </form>
+</mat-card>

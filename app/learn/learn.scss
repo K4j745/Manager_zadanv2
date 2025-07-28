@@ -1,0 +1,58 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+main {
+  min-height: 100vh;
+  background-image: url("/assets/images/istockphoto-1435666015-612x612.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  mat-card {
+    width: 1200px;
+    max-width: 1360px !important;
+    //max-height: 1200px !important;
+  }
+  .flashcard {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    height: 100%;
+    width: 100%;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transition: all 600ms;
+    transition: all 600ms;
+  }
+
+  .flashcard div {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 15%;
+    border: 2px solid grey;
+  }
+
+  .flashcard-back {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+    background-color: rgba(1, 1, 1, 0.1);
+  }
+
+  .flashcard.flipped {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+  }
+}
+//istockphoto-1298523613-612x612.jpg
+//istockphoto-1502033887-612x612.jpg
+//istockphoto-1632815011-612x612.jpg
+//istockphoto-1440656058-612x612.jpg
+//istockphoto-1435666015-612x612.jpg

@@ -24,13 +24,13 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public",
-                "output": "/"
+                "input": "src/assets",
+                "output": "/assets/"
               },
               {
                 "glob": "**/*",
-                "input": "src/assets/fonts",
-                "output": "fonts"
+                "input": "public",
+                "output": "/"
               }
             ],
             "styles": [
@@ -91,13 +91,13 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public",
-                "output": "/"
+                "input": "src/assets",
+                "output": "/assets/"
               },
               {
                 "glob": "**/*",
-                "input": "src/assets/fonts",
-                "output": "fonts"
+                "input": "public",
+                "output": "/"
               }
             ],
             "styles": [

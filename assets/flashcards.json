@@ -1,0 +1,182 @@
+[
+  {
+    "id": "1",
+    "front": "Co to jest Angular?",
+    "back": "Framework JavaScript/TypeScript do budowy skalowalnych aplikacji webowych, stworzony przez Google.",
+    "level": 1
+  },
+  {
+    "id": "2",
+    "front": "Do czego służy komponent w Angularze?",
+    "back": "Podstawowa jednostka UI, składa się z klasy TypeScript, szablonu HTML i stylów.",
+    "level": 1
+  },
+  {
+    "id": "3",
+    "front": "Jakie są podstawowe cykle życia komponentu?",
+    "back": "ngOnChanges, ngOnInit, ngDoCheck, ngAfterViewInit, ngOnDestroy itp.",
+    "level": 1
+  },
+  {
+    "id": "4",
+    "front": "Czym są dyrektywy strukturalne?",
+    "back": "Dyrektywy, które zmieniają strukturę DOM, np. *ngIf, *ngFor.",
+    "level": 1
+  },
+  {
+    "id": "5",
+    "front": "Czym są dyrektywy atrybutowe?",
+    "back": "Dyrektywy, które zmieniają wygląd lub zachowanie elementu, np. ngClass, ngStyle.",
+    "level": 1
+  },
+  {
+    "id": "6",
+    "front": "Do czego służy serwis w Angularze?",
+    "back": "Do logiki biznesowej i współdzielenia danych/pomocy między komponentami (wstrzykiwany przez DI).",
+    "level": 1
+  },
+  {
+    "id": "7",
+    "front": "Co to jest Dependency Injection?",
+    "back": "Mechanizm wstrzykiwania zależności (np. serwisów) do komponentów/konstruktora.",
+    "level": 1
+  },
+  {
+    "id": "8",
+    "front": "Jak działa routing w Angularze?",
+    "back": "Definiujesz trasy w RouterModule.forRoot(), a <router-outlet> renderuje komponenty na podstawie URL.",
+    "level": 1
+  },
+  {
+    "id": "9",
+    "front": "Co to jest moduł w Angularze?",
+    "back": "Zbiór komponentów, dyrektyw i serwisów, zadeklarowanych w @NgModule, służący do organizacji kodu.",
+    "level": 1
+  },
+  {
+    "id": "10",
+    "front": "Jak przesyłasz dane do komponentu podrzędnego?",
+    "back": "Poprzez dekorator @Input() w komponencie podrzędnym i wiązanie [inputProp] w szablonie rodzica.",
+    "level": 1
+  },
+  {
+    "id": "11",
+    "front": "Czym jest Angular Material?",
+    "back": "Biblioteka gotowych komponentów UI zgodnych z wytycznymi Material Design.",
+    "level": 2
+  },
+  {
+    "id": "12",
+    "front": "Jak zainstalować Angular Material?",
+    "back": "Polecenie: ng add @angular/material, wybierasz motyw, animacje i skonfigurujesz.",
+    "level": 2
+  },
+  {
+    "id": "13",
+    "front": "Co to jest <mat-toolbar>?",
+    "back": "Komponent paska narzędziowego, używany jako nagłówek aplikacji.",
+    "level": 2
+  },
+  {
+    "id": "14",
+    "front": "Jak działa <mat-sidenav-container>?",
+    "back": "Kontener, który zarządza bocznym panelem nawigacyjnym (<mat-sidenav>) i zawartością (<mat-sidenav-content>).",
+    "level": 2
+  },
+  {
+    "id": "15",
+    "front": "Do czego służy MatDialog?",
+    "back": "Serwis do otwierania okien dialogowych jako osobnych komponentów modalnych.",
+    "level": 2
+  },
+  {
+    "id": "16",
+    "front": "Co to jest MatSnackBar?",
+    "back": "Komponent do krótkich komunikatów (snackbar) wyświetlanych na dole ekranu.",
+    "level": 2
+  },
+  {
+    "id": "17",
+    "front": "Jak użyć MatTable z paginatorem?",
+    "back": "Używasz MatTableDataSource wraz z MatPaginator oraz ViewChild do podłączenia paginatora.",
+    "level": 2
+  },
+  {
+    "id": "18",
+    "front": "Czym jest MatFormField?",
+    "back": "Kontener dla elementów formularza, zapewnia etykietę, hint i komunikaty o błędach.",
+    "level": 2
+  },
+  {
+    "id": "19",
+    "front": "Jak skonfigurować motyw w Angular Material?",
+    "back": "W SCSS @use '@angular/material/theming'; i @include mat.define-theme(...) w styles.scss.",
+    "level": 2
+  },
+  {
+    "id": "20",
+    "front": "Co to jest BreakpointObserver?",
+    "back": "Serwis z @angular/cdk/layout do reagowania na zmiany rozmiaru ekranu (media queries w TS).",
+    "level": 2
+  },
+  {
+    "id": "21",
+    "front": "Czym jest Bootstrap?",
+    "back": "Framework CSS/JS do budowy responsywnych stron, zawiera siatkę, komponenty i skrypty JS.",
+    "level": 3
+  },
+  {
+    "id": "22",
+    "front": "Jak zainstalować Bootstrap w Angularze?",
+    "back": "npm install bootstrap i import w styles.scss lub angular.json 'node_modules/bootstrap/dist/css/bootstrap.min.css'.",
+    "level": 3
+  },
+  {
+    "id": "23",
+    "front": "Co to jest siatka (Grid) w Bootstrap?",
+    "back": "System kolumn oparty na Flexboxie, pozwala tworzyć układy responsywne z klasami col-*-*.",
+    "level": 3
+  },
+  {
+    "id": "24",
+    "front": "Jak użyć klasy .container i .container-fluid?",
+    "back": ".container ma stałą szerokość z margin auto, .container-fluid zajmuje 100% szerokości.",
+    "level": 3
+  },
+  {
+    "id": "25",
+    "front": "Czym są breakpointy w Bootstrap?",
+    "back": "Predefiniowane punkty przerwania (xs, sm, md, lg, xl) do stosowania klas responsywnych.",
+    "level": 3
+  },
+  {
+    "id": "26",
+    "front": "Jak tworzyć przyciski w Bootstrap?",
+    "back": "Klasami .btn i .btn-primary/.btn-secondary etc. oraz dodatkowo .btn-lg/.btn-sm.",
+    "level": 3
+  },
+  {
+    "id": "27",
+    "front": "Do czego służy Navbar w Bootstrap?",
+    "back": "Komponent nawigacyjny .navbar, pozwalający budować menu responsywne z przyciskiem hamburger.",
+    "level": 3
+  },
+  {
+    "id": "28",
+    "front": "Jak dodać modale w Bootstrap?",
+    "back": "Korzystasz z HTMLa .modal z odpowiednimi atrybutami data-bs-toggle oraz JavaScriptem bootstrap.Modal.",
+    "level": 3
+  },
+  {
+    "id": "29",
+    "front": "Co to jest Bootstrap Utility API?",
+    "back": "Zestaw wbudowanych klas pomocniczych (margins, paddings, colors) do szybkich modyfikacji stylów.",
+    "level": 3
+  },
+  {
+    "id": "30",
+    "front": "Jak dodawać ikony w Bootstrap?",
+    "back": "Używasz Bootstrap Icons (osobna paczka) lub wbudowanych klas .bi-*, albo Font Awesome.",
+    "level": 3
+  }
+]

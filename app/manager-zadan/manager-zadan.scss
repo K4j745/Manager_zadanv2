@@ -1,0 +1,9 @@
+html,
+body {
+  height: 100%; // potrzebne, gdy masz również inne elementy poza main
+  margin: 0;
+}
+
+main {
+  min-height: 100vh; // minimum tyle, ile ma całe okno przeglądarki
+}

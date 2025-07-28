@@ -1,0 +1,47 @@
+.manager-zadan-footer {
+  width: 100%;
+  border-top: 1px solid lightgray;
+  background-color: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+  padding: 1rem 1.5rem;
+
+  // override Bootstrapa: make the .row flex and push items apart
+  .row {
+    display: flex; // już jest flex w Bootstrapie, ale nadpiszemy justify
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  // Każda połówka zajmuje 50% i wyrównuje tekst wg klas text-*
+  .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+
+    &.text-center {
+      text-align: center;
+    }
+    &.text-md-start {
+      text-align: left;
+    }
+    &.text-md-end {
+      text-align: right;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  // Mobile: jedna kolumna, wszystko wyśrodkowane
+  @media (max-width: 768px) {
+    .row {
+      flex-direction: column;
+      text-align: center !important;
+      gap: 0.5rem;
+    }
+    .col-md-6 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+}

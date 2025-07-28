@@ -1,0 +1,15 @@
+<mat-form-field>
+  <mat-label>Wybierz datę</mat-label>
+  <!-- #docregion toggle -->
+  <input
+    matInput
+    [matDatepicker]="picker"
+    id="data"
+    formControlName="data"
+    [min]="minDate"
+  />
+  <mat-hint>MM/DD/YYYY</mat-hint>
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+  <!-- #enddocregion toggle -->
+</mat-form-field>
