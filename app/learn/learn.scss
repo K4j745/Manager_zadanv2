@@ -227,11 +227,11 @@ mat-progress-bar {
     padding: 0.5rem;
   }
   .flashcard-wrapper {
-    max-width: 98vw;
-    min-height: 200px;
+    max-width: 100vw;
+    min-height: 260px;
   }
   .flashcard {
-    height: 200px;
+    height: 260px;
   }
   .cards-grid {
     grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
