@@ -1,0 +1,526 @@
+// Import Bootstrap variables for consistency
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+
+// Variables
+:root {
+  --flashcard-height: 400px;
+  --flashcard-height-mobile: 300px;
+  --animation-duration: 0.6s;
+  --border-radius: 16px;
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-flashcard: 0 12px 48px rgba(0, 0, 0, 0.15);
+}
+
+// Base styles
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+main {
+  min-height: 100vh;
+  background-image: url("/assets/images/istockphoto-1435666015-612x612.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+  
+  .container-fluid {
+    position: relative;
+    z-index: 2;
+    padding: 1rem;
+    
+    @include media-breakpoint-up(md) {
+      padding: 2rem;
+    }
+  }
+}
+
+// Main card styling
+.main-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-card);
+  
+  mat-card-header {
+    padding: 1.5rem 1.5rem 0;
+    
+    @include media-breakpoint-down(sm) {
+      padding: 1rem 1rem 0;
+      
+      .mat-mdc-card-title {
+        font-size: 1.25rem;
+      }
+    }
+  }
+  
+  mat-card-content {
+    padding: 1.5rem;
+    
+    @include media-breakpoint-down(sm) {
+      padding: 1rem;
+    }
+  }
+}
+
+// Error container
+.error-container {
+  padding: 2rem;
+  
+  .error-icon {
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    color: #666;
+  }
+}
+
+// Level filters
+.level-filters {
+  .filter-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #333;
+    display: flex;
+    align-items: center;
+  }
+  
+  .filter-btn {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    font-weight: 500;
+    
+    &.level-1.mat-mdc-raised-button {
+      background-color: #4caf50;
+      color: white;
+    }
+    
+    &.level-2.mat-mdc-raised-button {
+      background-color: #ff9800;
+      color: white;
+    }
+    
+    &.level-3.mat-mdc-raised-button {
+      background-color: #f44336;
+      color: white;
+    }
+  }
+}
+
+// Progress container
+.progress-container {
+  .progress-text {
+    font-weight: 500;
+    color: #555;
+    display: flex;
+    align-items: center;
+  }
+  
+  .progress-percentage {
+    font-weight: 600;
+    color: #1976d2;
+  }
+  
+  .custom-progress-bar {
+    height: 8px;
+    border-radius: 4px;
+    
+    .mdc-linear-progress__bar-inner {
+      border-radius: 4px;
+    }
+  }
+}
+
+// No cards message
+.no-cards {
+  .no-cards-icon {
+    font-size: 4rem;
+    width: 4rem;
+    height: 4rem;
+    color: #999;
+  }
+  
+  h4 {
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+}
+
+// Flashcard wrapper and 3D animation
+.flashcard-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  
+  @include media-breakpoint-down(sm) {
+    gap: 1.5rem;
+  }
+}
+
+.flashcard-scene {
+  width: 100%;
+  max-width: 600px;
+  height: var(--flashcard-height);
+  perspective: 1000px;
+  cursor: pointer;
+  
+  @include media-breakpoint-down(md) {
+    max-width: 500px;
+    height: var(--flashcard-height-mobile);
+  }
+  
+  @include media-breakpoint-down(sm) {
+    max-width: 100%;
+    height: 280px;
+  }
+}
+
+.flashcard {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform var(--animation-duration) ease-in-out;
+  
+  &.is-flipped {
+    transform: rotateY(180deg);
+  }
+}
+
+.flashcard-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-flashcard);
+  
+  mat-card {
+    height: 100%;
+    border-radius: var(--border-radius);
+    border: none;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #1976d2, #42a5f5);
+    }
+  }
+}
+
+.flashcard-front {
+  // Front side styles (default)
+}
+
+.flashcard-back {
+  transform: rotateY(180deg);
+  
+  mat-card {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    
+    &::before {
+      background: linear-gradient(90deg, #1565c0, #1976d2);
+    }
+  }
+}
+
+// Card content styling
+.card-level-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+  
+  mat-chip {
+    font-weight: 600;
+    border-radius: 20px;
+    
+    &.level-1 {
+      background-color: #e8f5e8;
+      color: #2e7d32;
+    }
+    
+    &.level-2 {
+      background-color: #fff3e0;
+      color: #ef6c00;
+    }
+    
+    &.level-3 {
+      background-color: #ffebee;
+      color: #c62828;
+    }
+  }
+}
+
+.card-text {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.4;
+  margin: 0;
+  padding: 0 2rem;
+  
+  @include media-breakpoint-down(md) {
+    font-size: 1.3rem;
+    padding: 0 1.5rem;
+  }
+  
+  @include media-breakpoint-down(sm) {
+    font-size: 1.1rem;
+    padding: 0 1rem;
+  }
+}
+
+.answer-label {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1565c0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  @include media-breakpoint-down(sm) {
+    font-size: 1.1rem;
+  }
+}
+
+.answer-text {
+  font-size: 1.2rem;
+  color: #333;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0 2rem;
+  
+  @include media-breakpoint-down(md) {
+    font-size: 1.1rem;
+    padding: 0 1.5rem;
+  }
+  
+  @include media-breakpoint-down(sm) {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+.flip-hint {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  right: 0;
+  font-size: 0.875rem;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  
+  @include media-breakpoint-down(sm) {
+    font-size: 0.75rem;
+    bottom: 0.5rem;
+  }
+}
+
+.flashcard-scene:hover .flip-hint {
+  opacity: 1;
+}
+
+// Navigation controls
+.navigation-controls {
+  width: 100%;
+  max-width: 600px;
+  
+  @include media-breakpoint-down(md) {
+    max-width: 500px;
+  }
+  
+  .nav-btn {
+    height: 3rem;
+    font-weight: 500;
+    border-radius: 8px;
+    
+    @include media-breakpoint-down(sm) {
+      height: 2.5rem;
+      font-size: 0.875rem;
+    }
+    
+    mat-icon {
+      font-size: 1.25rem;
+      
+      @include media-breakpoint-down(sm) {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+// Cards overview
+.cards-overview {
+  .overview-panel {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cards-grid {
+    .card-preview {
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      }
+      
+      &.current-card {
+        border-color: #1976d2;
+        background-color: #e3f2fd;
+        
+        .preview-front {
+          font-weight: 600;
+          color: #1565c0;
+        }
+      }
+      
+      mat-card-content {
+        padding: 0.75rem;
+      }
+    }
+    
+    .preview-level {
+      .small-chip {
+        font-size: 0.75rem;
+        height: 1.5rem;
+        min-height: 1.5rem;
+      }
+    }
+    
+    .small-text {
+      font-size: 0.875rem;
+      line-height: 1.3;
+      color: #666;
+    }
+  }
+}
+
+// Utility classes
+.cursor-pointer {
+  cursor: pointer;
+}
+
+// Responsive adjustments
+@include media-breakpoint-down(lg) {
+  :root {
+    --flashcard-height: 350px;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  :root {
+    --flashcard-height: 320px;
+    --flashcard-height-mobile: 280px;
+  }
+  
+  .main-card {
+    margin: 0.5rem;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  :root {
+    --flashcard-height: 280px;
+    --flashcard-height-mobile: 260px;
+  }
+  
+  main {
+    background-attachment: scroll;
+  }
+  
+  .level-filters {
+    .filter-title {
+      font-size: 1.1rem;
+      margin-bottom: 1rem !important;
+    }
+  }
+  
+  .progress-container {
+    .progress-text, .progress-percentage {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.main-content {
+  animation: fadeIn 0.6s ease-out;
+}
+
+// Material Design enhancements
+.mat-mdc-progress-bar {
+  --mdc-linear-progress-active-indicator-color: #1976d2;
+  --mdc-linear-progress-track-color: rgba(25, 118, 210, 0.2);
+}
+
+.mat-mdc-card {
+  --mdc-elevated-card-container-color: transparent;
+}
+
+// Custom scrollbar for webkit browsers
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  
+  &:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
