@@ -9,12 +9,23 @@ import { Flashcard } from '../models/flashcard-model';
 import { FlashcardsState } from '../../state/flashcard.state';
 import { FlashcardsActions } from '../../state/flashcard.action';
 import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-
+import {
+  MatProgressBarModule,
+  MatProgressBar,
+} from '@angular/material/progress-bar';
 @Component({
   selector: 'app-learn',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressBar,
+  ],
   templateUrl: './learn.html',
   styleUrls: ['./learn.scss'],
 })

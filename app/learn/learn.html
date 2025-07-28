@@ -1,172 +1,184 @@
 <main>
-  <div class="learn-container">
-    <mat-card appearance="outlined" class="card">
-      <mat-card-header>
-        <mat-card-title>Nauka Flashcard</mat-card-title>
-        <button matButton (click)="restartLearning()">
-          <mat-icon>sync</mat-icon> Restart
+  <div class="learn-container container py-4">
+    <mat-card appearance="outlined" class="card shadow-lg">
+      <mat-card-header
+        class="d-flex justify-content-between align-items-center flex-wrap"
+      >
+        <mat-card-title><h3>Nauka Fiszek</h3></mat-card-title>
+        <button
+          matIconButton
+          color="primary"
+          (click)="restartLearning()"
+          class="restart-icon"
+        >
+          <mat-icon>sync</mat-icon>
         </button>
       </mat-card-header>
-
-      <!-- Loading State -->
-      <!-- <div *ngIf="loading$ | async" class="loading-container">
-      <div class="loading-spinner"></div>
-      <p>Ładowanie flashcards...</p>
-    </div> -->
-
       <!-- Error State -->
-      <div *ngIf="error$ | async as error" class="error-container">
+      <div
+        *ngIf="error$ | async as error"
+        class="error-container alert alert-danger my-3"
+      >
         <p><mat-icon>clear</mat-icon> {{ error }}</p>
-        <button (click)="loadFlashcards()" class="retry-btn">
+        <button
+          mat-stroked-button
+          color="warn"
+          (click)="loadFlashcards()"
+          class="retry-btn mt-2"
+        >
           Spróbuj ponownie
         </button>
       </div>
-
       <!-- Main Content -->
       <div
         *ngIf="!(loading$ | async) && !(error$ | async)"
         class="main-content"
       >
         <!-- Level Filter -->
-        <div class="level-filters">
-          <h3>Wybierz poziom:</h3>
-          <div class="filter-buttons">
+        <div class="level-filters mb-3">
+          <h3 class="h5 mb-2">Wybierz poziom:</h3>
+          <div class="filter-buttons btn-group">
             <button
               (click)="filterByLevel(null)"
               [class.active]="(currentLevelFilter$ | async) === null"
-              class="filter-btn all"
+              class="filter-btn btn btn-outline-secondary"
             >
               Wszystkie
             </button>
             <button
               (click)="filterByLevel(1)"
               [class.active]="(currentLevelFilter$ | async) === 1"
-              class="filter-btn level-1"
+              class="filter-btn btn btn-outline-primary"
             >
               Poziom 1
             </button>
             <button
               (click)="filterByLevel(2)"
               [class.active]="(currentLevelFilter$ | async) === 2"
-              class="filter-btn level-2"
+              class="filter-btn btn btn-outline-success"
             >
               Poziom 2
             </button>
             <button
               (click)="filterByLevel(3)"
               [class.active]="(currentLevelFilter$ | async) === 3"
-              class="filter-btn level-3"
+              class="filter-btn btn btn-outline-warning"
             >
               Poziom 3
             </button>
           </div>
         </div>
-
         <!-- Flashcard Study Area -->
-        <div *ngIf="flashcards$ | async as flashcards" class="study-area">
-          <!-- Progress Bar -->
-          <div *ngIf="flashcards.length > 0" class="progress-container">
-            <div class="progress-info">
-              <span
-                >Karta {{ currentCardIndex + 1 }} z
-                {{ flashcards.length }}</span
-              >
-              <!-- <span>{{ getProgressPercentage(flashcards) }}%</span> -->
+        <div
+          *ngIf="flashcards$ | async as flashcards"
+          class="study-area row justify-content-center"
+        >
+          <div class="col-12 col-md-8">
+            <!-- Progress Bar -->
+            <div *ngIf="flashcards.length > 0" class="progress-container mb-3">
+              <div class="progress-info d-flex justify-content-between">
+                <span
+                  >Karta {{ currentCardIndex + 1 }} z
+                  {{ flashcards.length }}</span
+                >
+              </div>
+              <mat-progress-bar
+                mode="determinate"
+                [value]="getProgressPercentage(flashcards)"
+              ></mat-progress-bar>
             </div>
-            <div class="progress-bar">
-              <div
-                class="progress-fill"
-                [style.width.%]="getProgressPercentage(flashcards)"
-              ></div>
-            </div>
-          </div>
-
-          <!-- No Cards Message -->
-          <div *ngIf="flashcards.length === 0" class="no-cards">
-            <p>🤷‍♂️ Brak flashcards dla wybranego filtru</p>
-          </div>
-
-          <!-- Flashcard Display -->
-          <div *ngIf="flashcards.length > 0" class="flashcard-container">
+            <!-- No Cards Message -->
             <div
-              class="flashcard"
-              [class.flipped]="showAnswer"
-              (click)="toggleAnswer()"
+              *ngIf="flashcards.length === 0"
+              class="no-cards text-center my-4"
             >
-              <!-- Front Side -->
-              <div
-                class="flashcard-front"
-                *ngIf="getCurrentCard(flashcards) as currentCard"
-              >
-                <div class="card-level">Poziom {{ currentCard.level }}</div>
-                <div class="card-content">
-                  <h2>{{ currentCard.front }}</h2>
+              <p>Brak fiszek dla wybranego filtru</p>
+            </div>
+            <!-- Flashcard Display -->
+            <div
+              *ngIf="flashcards.length > 0"
+              class="flashcard-outer d-flex justify-content-center align-items-center"
+            >
+              <div class="flashcard-wrapper">
+                <div
+                  class="flashcard"
+                  [class.flipped]="showAnswer"
+                  (click)="toggleAnswer()"
+                >
+                  <!-- Front Side -->
+                  <div class="flashcard-front">
+                    <ng-container
+                      *ngIf="getCurrentCard(flashcards) as currentCard"
+                    >
+                      <div class="card-level">
+                        Poziom {{ currentCard.level }}
+                      </div>
+                      <div class="card-content">
+                        <h2>{{ currentCard.front }}</h2>
+                      </div>
+                    </ng-container>
+                  </div>
+                  <!-- Back Side -->
+                  <div class="flashcard-back">
+                    <ng-container
+                      *ngIf="getCurrentCard(flashcards) as currentCard"
+                    >
+                      <div class="card-level">
+                        Poziom {{ currentCard.level }}
+                      </div>
+                      <div class="card-content">
+                        <h3>{{ currentCard.back }}</h3>
+                      </div>
+                    </ng-container>
+                  </div>
                 </div>
-                <!-- <button class="show-answer-btn" (click)="toggleAnswer()">
-                  👁️ Pokaż odpowiedź
-                </button> -->
-              </div>
-
-              <!-- Back Side -->
-              <div
-                class="flashcard-back"
-                *ngIf="showAnswer && getCurrentCard(flashcards) as currentCard"
-              >
-                <div class="card-level">Poziom {{ currentCard.level }}</div>
-                <div class="card-content">
-                  <h3>Odpowiedź:</h3>
-                  <p>{{ currentCard.back }}</p>
-                </div>
-                <!-- <button class="hide-answer-btn" (click)="toggleAnswer()">
-                  👁️‍🗨️ Ukryj odpowiedź
-                </button> -->
               </div>
             </div>
-
             <!-- Navigation Controls -->
-            <div class="navigation-controls">
+            <div
+              class="navigation-controls d-flex justify-content-between align-items-center mt-3"
+            >
               <button
+                mat-stroked-button
+                color="accent"
                 (click)="previousCard(flashcards)"
                 [disabled]="flashcards.length <= 1"
                 class="nav-btn prev-btn"
               >
-                <mat-icon>keyboard_arrow_left</mat-icon> Poprzednia
+                Poprzednia <mat-icon>keyboard_arrow_left</mat-icon>
               </button>
-
               <button
+                mat-stroked-button
+                color="accent"
                 (click)="nextCard(flashcards)"
                 [disabled]="flashcards.length <= 1"
                 class="nav-btn next-btn"
               >
-                Następna <mat-icon>keyboard_arrow_right</mat-icon>
+                <span>Następna</span> <mat-icon>keyboard_arrow_right</mat-icon>
               </button>
             </div>
-
-            <!-- Quick Actions -->
-            <!-- <div class="quick-actions">
-              <button (click)="toggleAnswer()" class="action-btn">
-                {{ showAnswer ? " Ukryj" : "👁️ Pokaż" }} odpowiedź
-              </button>
-            </div> -->
           </div>
         </div>
-
-        <!-- All Cards List (Optional) -->
-        <div class="cards-overview" *ngIf="flashcards$ | async as flashcards">
-          <h3>Przegląd kart ({{ flashcards.length }})</h3>
-          <div class="cards-grid">
+        <!-- All Cards List -->
+        <div
+          class="cards-overview mt-4"
+          *ngIf="flashcards$ | async as flashcards"
+        >
+          <h3 class="h6">Przegląd kart ({{ flashcards.length }})</h3>
+          <div class="cards-grid row g-2">
             <div
               *ngFor="let card of flashcards; let i = index"
-              class="card-preview"
+              class="card-preview col-4 col-md-2"
               [class.current]="i === currentCardIndex"
               (click)="currentCardIndex = i; selectFlashcard(card.id)"
             >
-              <div class="preview-level">{{ card.level }}</div>
-              <div class="preview-front">{{ card.front }}</div>
+              <div class="preview-level small">{{ card.level }}</div>
+              <div class="preview-front text-truncate">{{ card.front }}</div>
             </div>
           </div>
         </div>
       </div>
     </mat-card>
+    <div class="bg-overlay"></div>
   </div>
 </main>
